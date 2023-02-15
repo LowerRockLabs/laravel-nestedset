@@ -124,7 +124,7 @@ class QueryBuilder extends Builder
     }
 
     /**
-     * @param $id
+     * @param mixed $id
      * @param bool $andSelf
      *
      * @return $this
@@ -149,7 +149,7 @@ class QueryBuilder extends Builder
      *
      * @since 2.0
      *
-     * @param mixed $id
+     * @aram $id
      * @param array<mixed> $columns
      *
      * @return \Kalnoy\Nestedset\Collection
@@ -207,7 +207,7 @@ class QueryBuilder extends Builder
      *
      * @since 2.0
      *
-     * @param mixed $id
+     * @param $id
      * @param string $boolean
      * @param bool $not
      * @param bool $andSelf
