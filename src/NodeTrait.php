@@ -15,7 +15,7 @@ trait NodeTrait
     /**
      * Pending operation.
      *
-     * @var array
+     * @var array<mixed>
      */
     protected $pending;
 
@@ -74,7 +74,7 @@ trait NodeTrait
      *
      * @return $this
      */
-    protected function setNodeAction($action)
+    protected function setNodeAction(string $action)
     {
         $this->pending = func_get_args();
 
@@ -105,7 +105,7 @@ trait NodeTrait
     /**
      * @return bool
      */
-    public static function usesSoftDelete()
+    public static function usesSoftDelete(): bool
     {
         static $softDelete;
 
@@ -121,7 +121,7 @@ trait NodeTrait
     /**
      * @return bool
      */
-    protected function actionRaw()
+    protected function actionRaw(): bool
     {
         return true;
     }
@@ -149,7 +149,7 @@ trait NodeTrait
      *
      * @return int
      */
-    protected function getLowerBound()
+    protected function getLowerBound(): int
     {
         return (int)$this->newNestedSetQuery()->max($this->getRgtName());
     }
@@ -162,7 +162,7 @@ trait NodeTrait
      *
      * @return bool
      */
-    protected function actionAppendOrPrepend(self $parent, $prepend = false)
+    protected function actionAppendOrPrepend(self $parent, bool $prepend = false): bool
     {
         $parent->refreshNode();
 
@@ -200,7 +200,7 @@ trait NodeTrait
      *
      * @return bool
      */
-    protected function actionBeforeOrAfter(self $node, $after = false)
+    protected function actionBeforeOrAfter(self $node, bool $after = false): bool
     {
         $node->refreshNode();
 
@@ -278,7 +278,7 @@ trait NodeTrait
     /**
      * Get query for the node siblings and the node itself.
      *
-     * @param  array $columns
+     * @param  array<mixed> $columns
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
@@ -358,7 +358,7 @@ trait NodeTrait
      *
      * @return bool
      */
-    public function saveAsRoot()
+    public function saveAsRoot(): bool
     {
         if ($this->exists && $this->isRoot()) {
             return $this->save();
@@ -374,7 +374,7 @@ trait NodeTrait
      *
      * @return bool
      */
-    public function appendNode(self $node)
+    public function appendNode(self $node): bool
     {
         return $node->appendToNode($this)->save();
     }
@@ -386,7 +386,7 @@ trait NodeTrait
      *
      * @return bool
      */
-    public function prependNode(self $node)
+    public function prependNode(self $node): bool
     {
         return $node->prependToNode($this)->save();
     }
@@ -421,7 +421,7 @@ trait NodeTrait
      *
      * @return self
      */
-    public function appendOrPrependTo(self $parent, $prepend = false)
+    public function appendOrPrependTo(self $parent, bool $prepend = false)
     {
         $this->assertNodeExists($parent)
             ->assertNotDescendant($parent)
@@ -462,7 +462,7 @@ trait NodeTrait
      *
      * @return self
      */
-    public function beforeOrAfterNode(self $node, $after = false)
+    public function beforeOrAfterNode(self $node, bool $after = false)
     {
         $this->assertNodeExists($node)
             ->assertNotDescendant($node)
@@ -484,7 +484,7 @@ trait NodeTrait
      *
      * @return bool
      */
-    public function insertAfterNode(self $node)
+    public function insertAfterNode(self $node): bool
     {
         return $this->afterNode($node)->save();
     }
@@ -496,7 +496,7 @@ trait NodeTrait
      *
      * @return bool
      */
-    public function insertBeforeNode(self $node)
+    public function insertBeforeNode(self $node): bool
     {
         if ( ! $this->beforeNode($node)->save()) return false;
 
@@ -507,13 +507,13 @@ trait NodeTrait
     }
 
     /**
-     * @param $lft
-     * @param $rgt
-     * @param $parentId
+     * @param int $lft
+     * @param int $rgt
+     * @param int|string $parentId
      *
      * @return $this
      */
-    public function rawNode($lft, $rgt, $parentId)
+    public function rawNode(int $lft, int $rgt, int|string $parentId)
     {
         $this->setLft($lft)->setRgt($rgt)->setParentId($parentId);
 
@@ -527,7 +527,7 @@ trait NodeTrait
      *
      * @return bool
      */
-    public function up($amount = 1)
+    public function up(int $amount = 1): bool
     {
         $sibling = $this->prevSiblings()
             ->defaultOrder('desc')
@@ -546,7 +546,7 @@ trait NodeTrait
      *
      * @return bool
      */
-    public function down($amount = 1)
+    public function down(int $amount = 1): bool
     {
         $sibling = $this->nextSiblings()
             ->defaultOrder()
@@ -565,7 +565,7 @@ trait NodeTrait
      *
      * @return bool
      */
-    protected function insertAt($position)
+    protected function insertAt(int $position): bool
     {
         ++static::$actionsPerformed;
 
@@ -585,7 +585,7 @@ trait NodeTrait
      *
      * @return int
      */
-    protected function moveNode($position)
+    protected function moveNode(int $position): int
     {
         $updated = $this->newNestedSetQuery()
                 ->moveNode($this->getKey(), $position) > 0;
@@ -604,7 +604,7 @@ trait NodeTrait
      *
      * @return bool
      */
-    protected function insertNode($position)
+    protected function insertNode(int $position): bool
     {
         $this->newNestedSetQuery()->makeGap($position, 2);
 
@@ -715,15 +715,15 @@ trait NodeTrait
     }
 
     /**
-     * @return array
+     * @return array<mixed>
      */
-    protected function getScopeAttributes()
+    protected function getScopeAttributes(): array
     {
         return null;
     }
 
     /**
-     * @param array $attributes
+     * @param array<mixed> $attributes
      *
      * @return self
      */
@@ -782,7 +782,7 @@ trait NodeTrait
      *
      * @return int
      */
-    public function getNodeHeight()
+    public function getNodeHeight(): int
     {
         if ( ! $this->exists) return 2;
 
@@ -794,7 +794,7 @@ trait NodeTrait
      *
      * @return int
      */
-    public function getDescendantCount()
+    public function getDescendantCount(): int
     {
         return ceil($this->getNodeHeight() / 2) - 1;
     }
@@ -804,11 +804,11 @@ trait NodeTrait
      *
      * Behind the scenes node is appended to found parent node.
      *
-     * @param int $value
+     * @param int|string $value
      *
      * @throws Exception If parent node doesn't exists
      */
-    public function setParentIdAttribute($value)
+    public function setParentIdAttribute(int|string $value)
     {
         if ($this->getParentId() == $value) return;
 
@@ -824,7 +824,7 @@ trait NodeTrait
      *
      * @return boolean
      */
-    public function isRoot()
+    public function isRoot(): bool
     {
         return is_null($this->getParentId());
     }
@@ -832,7 +832,7 @@ trait NodeTrait
     /**
      * @return bool
      */
-    public function isLeaf()
+    public function isLeaf(): bool
     {
         return $this->getLft() + 1 == $this->getRgt();
     }
@@ -842,7 +842,7 @@ trait NodeTrait
      *
      * @return  string
      */
-    public function getLftName()
+    public function getLftName(): string
     {
         return NestedSet::LFT;
     }
@@ -852,7 +852,7 @@ trait NodeTrait
      *
      * @return  string
      */
-    public function getRgtName()
+    public function getRgtName(): string
     {
         return NestedSet::RGT;
     }
@@ -860,9 +860,9 @@ trait NodeTrait
     /**
      * Get the parent id key name.
      *
-     * @return  string
+     * @return  integer|string
      */
-    public function getParentIdName()
+    public function getParentIdName(): integer|string
     {
         return NestedSet::PARENT_ID;
     }
@@ -872,7 +872,7 @@ trait NodeTrait
      *
      * @return  integer
      */
-    public function getLft()
+    public function getLft(): int
     {
         return $this->getAttributeValue($this->getLftName());
     }
@@ -882,7 +882,7 @@ trait NodeTrait
      *
      * @return  integer
      */
-    public function getRgt()
+    public function getRgt(): int
     {
         return $this->getAttributeValue($this->getRgtName());
     }
@@ -890,9 +890,9 @@ trait NodeTrait
     /**
      * Get the value of the model's parent id key.
      *
-     * @return  integer
+     * @return  integer|string
      */
-    public function getParentId()
+    public function getParentId(): integer|string
     {
         return $this->getAttributeValue($this->getParentIdName());
     }
@@ -902,7 +902,7 @@ trait NodeTrait
      *
      * This can be either a next sibling or a next sibling of the parent node.
      *
-     * @param array $columns
+     * @param array<mixed> $columns
      *
      * @return self
      */
@@ -916,7 +916,7 @@ trait NodeTrait
      *
      * This can be either a prev sibling or parent node.
      *
-     * @param array $columns
+     * @param array<mixed> $columns
      *
      * @return self
      */
@@ -926,7 +926,7 @@ trait NodeTrait
     }
 
     /**
-     * @param array $columns
+     * @param array<mixed> $columns
      *
      * @return Collection
      */
@@ -936,7 +936,7 @@ trait NodeTrait
     }
 
     /**
-     * @param array $columns
+     * @param array<mixed> $columns
      *
      * @return Collection|self[]
      */
@@ -946,7 +946,7 @@ trait NodeTrait
     }
 
     /**
-     * @param array $columns
+     * @param array<mixed> $columns
      *
      * @return Collection|self[]
      */
@@ -956,7 +956,7 @@ trait NodeTrait
     }
 
     /**
-     * @param array $columns
+     * @param array<mixed> $columns
      *
      * @return Collection|self[]
      */
@@ -966,7 +966,7 @@ trait NodeTrait
     }
 
     /**
-     * @param array $columns
+     * @param array<mixed> $columns
      *
      * @return Collection|self[]
      */
@@ -976,7 +976,7 @@ trait NodeTrait
     }
 
     /**
-     * @param array $columns
+     * @param array<mixed> $columns
      *
      * @return self
      */
@@ -986,7 +986,7 @@ trait NodeTrait
     }
 
     /**
-     * @param array $columns
+     * @param array<mixed> $columns
      *
      * @return self
      */
@@ -1002,7 +1002,7 @@ trait NodeTrait
      *
      * @return bool
      */
-    public function isDescendantOf(self $other)
+    public function isDescendantOf(self $other): bool
     {
         return $this->getLft() > $other->getLft() &&
             $this->getLft() < $other->getRgt();
@@ -1015,7 +1015,7 @@ trait NodeTrait
      *
      * @return bool
      */
-    public function isSelfOrDescendantOf(self $other)
+    public function isSelfOrDescendantOf(self $other): bool
     {
         return $this->getLft() >= $other->getLft() &&
             $this->getLft() < $other->getRgt();
@@ -1028,7 +1028,7 @@ trait NodeTrait
      *
      * @return bool
      */
-    public function isChildOf(self $other)
+    public function isChildOf(self $other): bool
     {
         return $this->getParentId() == $other->getKey();
     }
@@ -1040,7 +1040,7 @@ trait NodeTrait
      *
      * @return bool
      */
-    public function isSiblingOf(self $other)
+    public function isSiblingOf(self $other): bool
     {
         return $this->getParentId() == $other->getParentId();
     }
@@ -1052,7 +1052,7 @@ trait NodeTrait
      *
      * @return bool
      */
-    public function isAncestorOf(self $other)
+    public function isAncestorOf(self $other): bool
     {
         return $other->isDescendantOf($this);
     }
@@ -1064,7 +1064,7 @@ trait NodeTrait
      *
      * @return bool
      */
-    public function isSelfOrAncestorOf(self $other)
+    public function isSelfOrAncestorOf(self $other): bool
     {
         return $other->isSelfOrDescendantOf($this);
     }
@@ -1074,15 +1074,15 @@ trait NodeTrait
      *
      * @return bool
      */
-    public function hasMoved()
+    public function hasMoved(): bool
     {
         return $this->moved;
     }
 
     /**
-     * @return array
+     * @return array<mixed>
      */
-    protected function getArrayableRelations()
+    protected function getArrayableRelations(): array
     {
         $result = parent::getArrayableRelations();
 
@@ -1097,15 +1097,15 @@ trait NodeTrait
      *
      * @return bool
      */
-    protected function hardDeleting()
+    protected function hardDeleting(): bool
     {
         return ! $this->usesSoftDelete() || $this->forceDeleting;
     }
 
     /**
-     * @return array
+     * @return array<mixed>
      */
-    public function getBounds()
+    public function getBounds(): array
     {
         return [ $this->getLft(), $this->getRgt() ];
     }
@@ -1202,11 +1202,11 @@ trait NodeTrait
     }
 
     /**
-     * @param array|null $except
+     * @param array<mixed>|null $except
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function replicate(array $except = null)
+    public function replicate(array $except = null): array|null
     {
         $defaults = [
             $this->getParentIdName(),

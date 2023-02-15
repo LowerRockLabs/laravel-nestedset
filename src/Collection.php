@@ -77,7 +77,7 @@ class Collection extends BaseCollection
      *
      * @return int
      */
-    protected function getRootNodeId($root = false)
+    protected function getRootNodeId($root = false): int
     {
         if (NestedSet::isNode($root)) {
             return $root->getKey();
@@ -110,7 +110,7 @@ class Collection extends BaseCollection
      *
      * @return static
      */
-    public function toFlatTree($root = false)
+    public function toFlatTree(bool $root = false)
     {
         $result = new static;
 

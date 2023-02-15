@@ -27,9 +27,9 @@ class QueryBuilder extends Builder
      * @param mixed $id
      * @param bool $required
      *
-     * @return array
+     * @return array<mixed>
      */
-    public function getNodeData($id, $required = false)
+    public function getNodeData($id, bool $required = false): array
     {
         $query = $this->toBase();
 
@@ -55,7 +55,7 @@ class QueryBuilder extends Builder
      *
      * @return array
      */
-    public function getPlainNodeData($id, $required = false)
+    public function getPlainNodeData($id, bool $required = false)
     {
         return array_values($this->getNodeData($id, $required));
     }
@@ -84,7 +84,7 @@ class QueryBuilder extends Builder
      *
      * @return $this
      */
-    public function whereAncestorOf($id, $andSelf = false, $boolean = 'and')
+    public function whereAncestorOf($id, bool $andSelf = false, $boolean = 'and')
     {
         $keyName = $this->model->getTable() . '.' . $this->model->getKeyName();
 
@@ -129,7 +129,7 @@ class QueryBuilder extends Builder
      *
      * @return $this
      */
-    public function orWhereAncestorOf($id, $andSelf = false)
+    public function orWhereAncestorOf($id, bool $andSelf = false)
     {
         return $this->whereAncestorOf($id, $andSelf, 'or');
     }
@@ -150,7 +150,7 @@ class QueryBuilder extends Builder
      * @since 2.0
      *
      * @param mixed $id
-     * @param array $columns
+     * @param array<mixed> $columns
      *
      * @return \Kalnoy\Nestedset\Collection
      */
@@ -161,7 +161,7 @@ class QueryBuilder extends Builder
 
     /**
      * @param $id
-     * @param array $columns
+     * @param array<mixed> $columns
      *
      * @return \Kalnoy\Nestedset\Collection
      */
@@ -175,7 +175,7 @@ class QueryBuilder extends Builder
      *
      * @since 2.0
      *
-     * @param array $values
+     * @param array<mixed> $values
      * @param string $boolean
      * @param bool $not
      *
@@ -193,7 +193,7 @@ class QueryBuilder extends Builder
      *
      * @since 2.0
      *
-     * @param array $values
+     * @param array<mixed> $values
      *
      * @return $this
      */
@@ -280,7 +280,7 @@ class QueryBuilder extends Builder
      * @since 2.0
      *
      * @param mixed $id
-     * @param array $columns
+     * @param array<mixed> $columns
      * @param bool $andSelf
      *
      * @return Collection
@@ -298,7 +298,7 @@ class QueryBuilder extends Builder
 
     /**
      * @param $id
-     * @param array $columns
+     * @param array<mixed> $columns
      *
      * @return Collection
      */
@@ -381,7 +381,7 @@ class QueryBuilder extends Builder
     }
 
     /**
-     * @param array $columns
+     * @param array<mixed> $columns
      *
      * @return Collection
      */
@@ -425,7 +425,7 @@ class QueryBuilder extends Builder
      *
      * @since 2.0
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function wrappedColumns()
     {
@@ -608,9 +608,9 @@ class QueryBuilder extends Builder
      *
      * @since 2.0
      *
-     * @param array $params
+     * @param array<mixed> $params
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function patch(array $params)
     {
@@ -631,7 +631,7 @@ class QueryBuilder extends Builder
      * @since 2.0
      *
      * @param string $col
-     * @param array $params
+     * @param array<mixed> $params
      *
      * @return string
      */
@@ -665,7 +665,7 @@ class QueryBuilder extends Builder
      *
      * @since 2.0
      *
-     * @return array
+     * @return array<mixed>
      */
     public function countErrors()
     {
@@ -880,7 +880,7 @@ class QueryBuilder extends Builder
     }
 
     /**
-     * @param array $dictionary
+     * @param array<mixed> $dictionary
      * @param NodeTrait|Model|null $parent
      *
      * @return int
@@ -918,8 +918,8 @@ class QueryBuilder extends Builder
     }
 
     /**
-     * @param array $dictionary
-     * @param array $updated
+     * @param array<mixed> $dictionary
+     * @param array<mixed> $updated
      * @param $parentId
      * @param int $cut
      *
@@ -956,7 +956,7 @@ class QueryBuilder extends Builder
      *
      * If item data does not contain primary key, new node will be created.
      *
-     * @param array $data
+     * @param array<mixed> $data
      * @param bool $delete Whether to delete nodes that exists but not in the data
      *                     array
      * @param null $root
@@ -1008,7 +1008,7 @@ class QueryBuilder extends Builder
 
     /**
      * @param $root
-     * @param array $data
+     * @param array<mixed> $data
      * @param bool $delete
      *
      * @return int
@@ -1019,9 +1019,9 @@ class QueryBuilder extends Builder
     }
 
     /**
-     * @param array $dictionary
-     * @param array $data
-     * @param array $existing
+     * @param array<mixed> $dictionary
+     * @param array<mixed> $data
+     * @param array<mixed> $existing
      * @param mixed $parentId
      */
     protected function buildRebuildDictionary(array &$dictionary,
@@ -1078,7 +1078,7 @@ class QueryBuilder extends Builder
     /**
      * Get the root node.
      *
-     * @param array $columns
+     * @param array<mixed> $columns
      *
      * @return self
      */

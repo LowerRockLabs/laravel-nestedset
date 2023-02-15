@@ -62,17 +62,17 @@ abstract class BaseRelation extends Relation
     /**
      * @param $hash
      * @param $table
-     * @param $lft
-     * @param $rgt
+     * @param int $lft
+     * @param int $rgt
      *
      * @return string
      */
-    abstract protected function relationExistenceCondition($hash, $table, $lft, $rgt);
+    abstract protected function relationExistenceCondition($hash, $table, int $lft, int $rgt);
 
     /**
      * @param EloquentBuilder $query
      * @param EloquentBuilder $parent
-     * @param array $columns
+     * @param array<mixed> $columns
      *
      * @return mixed
      */
@@ -101,12 +101,12 @@ abstract class BaseRelation extends Relation
     /**
      * Initialize the relation on a set of models.
      *
-     * @param  array $models
+     * @param  array<mixed> $models
      * @param  string $relation
      *
-     * @return array
+     * @return array<mixed>
      */
-    public function initRelation(array $models, $relation)
+    public function initRelation(array $models, string $relation): array
     {
         return $models;
     }
@@ -114,7 +114,7 @@ abstract class BaseRelation extends Relation
     /**
      * @param EloquentBuilder $query
      * @param EloquentBuilder $parent
-     * @param array $columns
+     * @param array<mixed> $columns
      *
      * @return mixed
      */
@@ -131,7 +131,7 @@ abstract class BaseRelation extends Relation
      * @param  bool $incrementJoinCount
      * @return string
      */
-    public function getRelationCountHash($incrementJoinCount = true)
+    public function getRelationCountHash(bool $incrementJoinCount = true): string
     {
         return 'nested_set_'.($incrementJoinCount ? static::$selfJoinCount++ : static::$selfJoinCount);
     }
@@ -149,11 +149,11 @@ abstract class BaseRelation extends Relation
     /**
      * Set the constraints for an eager load of the relation.
      *
-     * @param  array $models
+     * @param  array<mixed> $models
      *
      * @return void
      */
-    public function addEagerConstraints(array $models)
+    public function addEagerConstraints(array $models): void
     {
         // The first model in the array is always the parent, so add the scope constraints based on that model.
         // @link https://github.com/laravel/framework/pull/25240
@@ -174,13 +174,13 @@ abstract class BaseRelation extends Relation
     /**
      * Match the eagerly loaded results to their parents.
      *
-     * @param  array $models
+     * @param  array<mixed> $models
      * @param  EloquentCollection $results
      * @param  string $relation
      *
-     * @return array
+     * @return array<mixed>
      */
-    public function match(array $models, EloquentCollection $results, $relation)
+    public function match(array $models, EloquentCollection $results, $relation): array
     {
         foreach ($models as $model) {
             $related = $this->matchForModel($model, $results);

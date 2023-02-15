@@ -61,9 +61,9 @@ class NestedSet
     /**
      * Get a list of default columns.
      *
-     * @return array
+     * @return array<mixed>
      */
-    public static function getDefaultColumns()
+    public static function getDefaultColumns(): array
     {
         return [ static::LFT, static::RGT, static::PARENT_ID ];
     }
@@ -75,7 +75,7 @@ class NestedSet
      *
      * @return bool
      */
-    public static function isNode($node)
+    public static function isNode($node): bool
     {
         return is_object($node) && in_array(NodeTrait::class, (array)$node);
     }

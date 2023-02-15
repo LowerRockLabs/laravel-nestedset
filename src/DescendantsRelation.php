@@ -13,7 +13,7 @@ class DescendantsRelation extends BaseRelation
      *
      * @return void
      */
-    public function addConstraints()
+    public function addConstraints(): void
     {
         if ( ! static::$constraints) return;
 
@@ -42,14 +42,14 @@ class DescendantsRelation extends BaseRelation
     }
 
     /**
-     * @param $hash
-     * @param $table
-     * @param $lft
-     * @param $rgt
+     * @param mixed $hash
+     * @param mixed $table
+     * @param int $lft
+     * @param int $rgt
      *
      * @return string
      */
-    protected function relationExistenceCondition($hash, $table, $lft, $rgt)
+    protected function relationExistenceCondition($hash, $table, int $lft, int $rgt): string
     {
         return "{$hash}.{$lft} between {$table}.{$lft} + 1 and {$table}.{$rgt}";
     }
