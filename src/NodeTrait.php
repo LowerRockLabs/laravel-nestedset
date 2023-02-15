@@ -715,9 +715,9 @@ trait NodeTrait
     }
 
     /**
-     * @return array<mixed>
+     * @return null
      */
-    protected function getScopeAttributes(): array
+    protected function getScopeAttributes(): null
     {
         return null;
     }
