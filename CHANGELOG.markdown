@@ -1,15 +1,14 @@
-### 4.3.4
-*   Support Laravel 5.8
+### 7.0.0
 
-### 4.3.3
-*   Support Laravel 5.7
+*   Support Laravel 9.0 and 10.0
+*   Remove support for earlier versions
 
 ### 4.3.2
-*   Support Laravel 5.6
+
 *   Added `nestedSet` and `dropNestedSet` blueprint macros
 
 ### 4.3.0
-*   Support Laravel 5.5
+
 *   Added `fixSubtree` and `rebuildSubtree` methods
 *   Increased performance of tree rebuilding
 
