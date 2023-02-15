@@ -860,9 +860,9 @@ trait NodeTrait
     /**
      * Get the parent id key name.
      *
-     * @return  integer|string
+     * @return  int|string
      */
-    public function getParentIdName(): integer|string
+    public function getParentIdName(): int|string
     {
         return NestedSet::PARENT_ID;
     }
@@ -870,7 +870,7 @@ trait NodeTrait
     /**
      * Get the value of the model's lft key.
      *
-     * @return  integer
+     * @return  int
      */
     public function getLft(): int
     {
@@ -880,7 +880,7 @@ trait NodeTrait
     /**
      * Get the value of the model's rgt key.
      *
-     * @return  integer
+     * @return  int
      */
     public function getRgt(): int
     {
@@ -890,9 +890,9 @@ trait NodeTrait
     /**
      * Get the value of the model's parent id key.
      *
-     * @return  integer|string
+     * @return  int|string
      */
-    public function getParentId(): integer|string
+    public function getParentId(): int|string
     {
         return $this->getAttributeValue($this->getParentIdName());
     }
