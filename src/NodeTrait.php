@@ -509,11 +509,11 @@ trait NodeTrait
     /**
      * @param int $lft
      * @param int $rgt
-     * @param int|string $parentId
+     * @param int|string|null $parentId
      *
      * @return $this
      */
-    public function rawNode(int $lft, int $rgt, int|string $parentId)
+    public function rawNode(int $lft, int $rgt, int|string|null $parentId)
     {
         $this->setLft($lft)->setRgt($rgt)->setParentId($parentId);
 
